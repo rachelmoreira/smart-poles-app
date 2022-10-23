@@ -7,14 +7,10 @@ import LoginRoute from './src/routes/LoginRoute';
 
 export default function App() {
   return (
-  <StrictMode>
     <SafeAreaView style= {{ flex: 1, backgroundColor:'#4d6979'}}>
       <StatusBar/>
-      {/* <Text>Teste</Text> */}
-      {/* <AppRoutes/> */}
       <LoginRoute/>
-    </SafeAreaView>
-  </StrictMode>)
+    </SafeAreaView>)
 }
 
 const styles = StyleSheet.create({

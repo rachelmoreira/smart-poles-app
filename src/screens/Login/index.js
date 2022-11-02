@@ -14,12 +14,14 @@ import { useState, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import styles from "../../../styles";
 import { Picker } from "@react-native-picker/picker";
+import { getCondominiums } from "../../services/CondominiumService";
 
 export default function Login() {
   const navigation = useNavigation();
 
   const [condominium, setCondominium] = useState([]);
   const [condominiumId, setCondominiumId] = useState("");
+  const [condominiums, setCondominiums] = useState([]);
 
   useEffect(() => {
     console.log("executando useffect");
@@ -28,6 +30,9 @@ export default function Login() {
 
   async function processUseEffect() {
     await loadData();
+    const condominiumsResponse = await getCondominiums();
+    const condominiumsData = condominiumsResponse.data;
+    setCondominiums(condominiumsData.condominiums);
   }
 
   function loadData() {

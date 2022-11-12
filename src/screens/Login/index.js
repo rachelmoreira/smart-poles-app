@@ -15,12 +15,13 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import styles from "../../../styles";
 import { Picker } from "@react-native-picker/picker";
 import { getCondominiums } from "../../services/CondominiumService";
+import { CondominiumService } from "../../services/CondominiumService";
 
 export default function Login() {
   const navigation = useNavigation();
 
   const [condominium, setCondominium] = useState([]);
-  const [condominiumId, setCondominiumId] = useState("");
+  const [condominiumId, setCondominiumId] = useState();
   const [condominiums, setCondominiums] = useState([]);
 
   useEffect(() => {
@@ -30,7 +31,7 @@ export default function Login() {
 
   async function processUseEffect() {
     await loadData();
-    const condominiumsResponse = await getCondominiums();
+    const condominiumsResponse = await CondominiumService.getCondominiums();
     const condominiumsData = condominiumsResponse.data;
     setCondominiums(condominiumsData.condominiums);
   }
@@ -46,7 +47,7 @@ export default function Login() {
 
   async function saveValue() {
     try {
-      await AsyncStorage.setItem("@selected", condominiumId);
+      await AsyncStorage.setItem("@selectedId", condominiumId.toString());
 
       navigation.navigate("MainApp", condominiumId);
     } catch (e) {
@@ -93,12 +94,12 @@ export default function Login() {
                 dropdownIconColor={"#000"}
                 prompt="Selecione o condomínio:"
               >
-                {condominium !== undefined &&
-                  condominium.map((condominium, index) => (
+                {condominiums !== undefined &&
+                  condominiums.map((condominium, index) => (
                     <Picker.Item
                       key={index.toString()}
-                      label={condominium.label}
-                      value={condominium.value}
+                      label={condominium.name}
+                      value={condominium.code}
                       style={{ fontSize: 18 }}
                     />
                   ))}

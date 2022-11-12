@@ -21,7 +21,7 @@ export default function Home() {
 
   async function getData() {
     try {
-      const value = await AsyncStorage.getItem("@selected");
+      const value = await AsyncStorage.getItem("@selectedId");
       if (value !== null) {
         const base = [
           { label: "Condomínio Wall Street", value: "1" },
